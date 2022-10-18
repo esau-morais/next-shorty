@@ -5,7 +5,7 @@ import { Layout } from '../layouts'
 
 export default function Home() {
   const [url, setUrl] = useState('')
-  const [shortUrl, setShortUrl] = useState<string>(null! || "")
+  const [shortUrl, setShortUrl] = useState<string | null>('')
 
   const handleUrlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,6 +21,7 @@ export default function Home() {
     setShortUrl(
       `${document.location.protocol}//${document.location.host}/${data.shortGenerated}`
     )
+    setUrl('')
   }
 
   return (
@@ -31,7 +32,7 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="mb-2">
-          <h1 className="text-2xl cursor-default">
+          <h1 className="cursor-default text-2xl">
             the{' '}
             <em className="border-b-[#191919] transition-all hover:border-b hover:border-b-[#191919]">
               shorter
@@ -44,69 +45,45 @@ export default function Home() {
           </h1>
         </div>
 
-        <div className="flex items-center justify-between p-2 rounded-md bg-zinc-900">
-          <div className="flex items-center">
-            <div className="flex items-center px-4 pt-4 pb-3 space-x-2 text-sm text-gray-400 flex-0">
-              <i className="inline-block w-3 h-3 bg-red-400 rounded-full"></i>
-              <i className="inline-block w-3 h-3 bg-yellow-400 rounded-full"></i>
-              <i className="inline-block w-3 h-3 bg-green-400 rounded-full"></i>
-
-              <div className="flex items-center space-x-4 text-sm text-gray-400 flex-0">
-                <div className="flex items-center space-x-[0.5px]">
-                  <Link href="/">
-                    <svg
-                      className="inline-block w-6 h-6 cursor-pointer"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                  </Link>
-
-                  <svg
-                    className="inline-block w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </div>
-
-                <svg
-                  className="inline-block w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
+        <div className="flex w-full flex-col items-center rounded-md bg-zinc-900 px-5 py-4 sm:w-auto sm:flex-row">
+          <div className="mb-2 flex w-full items-center justify-between sm:mr-4 sm:mb-0 sm:w-auto sm:justify-start">
+            <div className="flex-0 mr-4 flex items-center space-x-2 pt-2 pb-3 text-sm text-gray-400">
+              <i className="inline-block h-3 w-3 rounded-full bg-red-400" />
+              <i className="inline-block h-3 w-3 rounded-full bg-yellow-400" />
+              <i className="inline-block h-3 w-3 rounded-full bg-green-400" />
             </div>
+            <button
+              className={`flex-0 flex items-center space-x-4 text-sm text-gray-400 outline-4 outline-offset-4 outline-purple-500 transition-all ${
+                !shortUrl ? 'cursor-not-allowed' : ''
+              }`}
+              type="button"
+              onClick={() => setShortUrl(null)}
+              disabled={!shortUrl}
+            >
+              <svg
+                className="inline-block h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
           </div>
           {shortUrl ? (
             <Link href={shortUrl}>{shortUrl}</Link>
           ) : (
             <form
-              className="text-gray-400 whitespace-no-wrap flex-0"
+              className="whitespace-no-wrap flex-0 w-full text-gray-400 sm:w-auto"
               onSubmit={handleUrlSubmit}
             >
               <input
-                className="whitespace-no-wrap my-auto flex-1 overflow-hidden rounded-full border-none bg-[#f1f1f1] px-2 py-1 outline-4 outline-offset-1 outline-purple-500 transition-all"
-                placeholder="https://website.com"
+                className="whitespace-no-wrap my-auto w-full flex-1 overflow-hidden rounded-full border-none bg-[#f1f1f1] px-3 py-2 outline-4 outline-offset-4 outline-purple-500 transition-all"
+                placeholder="https://any.com"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
               />

@@ -7,7 +7,7 @@ const redis = new Redis({
 
 const getShort = (): string => {
   const alpha = `abcdfghlmnopqrstuvwxyz`.split('')
-  return [...new Array(8)]
+  return [...new Array(6)]
     .map((_) => alpha[Math.floor(Math.random() * alpha.length)])
     .join('')
 }
