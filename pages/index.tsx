@@ -82,6 +82,7 @@ export default function Home() {
               onSubmit={handleUrlSubmit}
             >
               <input
+                type="url"
                 className="whitespace-no-wrap my-auto w-full flex-1 overflow-hidden rounded-full border-none bg-[#f1f1f1] px-3 py-2 outline-4 outline-offset-4 outline-purple-500 transition-all"
                 placeholder="https://any.com"
                 value={url}
