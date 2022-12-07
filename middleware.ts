@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUrl } from './lib/redis'
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl
+  const path = req.nextUrl.pathname.split('/')[1]
 
-  if (['', 'api', 'favicon.ico'].includes(pathname)) return
+  if (['', 'api', 'favicon.ico'].includes(path)) {
+    return
+  }
 
-  const url = await getUrl(pathname)
-  if (url) return NextResponse.redirect(url)
+  const url = await getUrl(path)
+  if (url) {
+    return NextResponse.redirect(url)
+  }
 }
